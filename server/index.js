@@ -50,7 +50,8 @@ const fileFilter = (req, file, cb) => {
 };
 
 app.get("/", (req, res) => {
-  res.send("Hello, Express!");
+  // res.send("Hello, Express!");
+  res.redirect("/feed");
 });
 
 // app.use(bodyParser.urlencoded()); // x-www-form-urlencoded <form>
