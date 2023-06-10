@@ -1,0 +1,14 @@
+to install backend:
+npm init -y
+npm i express
+npm install --save express-validator bcrypt jsonwebtoken mongoose uuid multer
+to automatic update during work
+npm install -g nodemon
+//i think below not urgent ,it only work in development mode
+npm install --save-dev nodemon
+to run backend
+node ......./.../.app.js or nodemon app.js
+install react frontend:
+npm install
+npm audit fix --force
+npm start

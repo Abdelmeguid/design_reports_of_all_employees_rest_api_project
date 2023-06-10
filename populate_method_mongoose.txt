@@ -1,0 +1,52 @@
+Populate() function populate...
+
+That might be very clear for natives English speaker, but maybe not for others.
+
+In short
+Populate will automatically replace the specified path in the document, with document(s) from other collection(s).
+
+Long version
+Let's take your example:
+
+Story.findOne({ title: Nintendo })
+Will return a Story of that kind :
+
+{
+  _creator : A0jfdSMmEJj9, //id of the creator (totally random, just for a clear example)
+    title    : Nintendo,
+    fans     : [r432i900fds09809n, fdsjifdsjfueu88] // again, totally random that I've typed here
+  }
+}
+In some case, those kind of request would be enough, because we don't care about the author or the fans so, having some ID won't bother us much.
+
+But in the case where i need that _creator's name, I'll need to make another request to find it in database. Except, that here in mongoose we have a clever function called populate() that we can chained to our previous request in order to directly get that information in our answer without explictly doing an additional request.
+
+Story.findOne({ title: Nintendo }).populate('_creator')
+will return
+
+{
+  _creator : {
+       _id : A0jfdSMmEJj*9,
+       name: Sai,
+       age: 100,
+       stories : [fdsfdsfdsew38u, 89hr3232, ...]
+    },
+    title    : Nintendo,
+    fans     : [r432i900fds09809n, fdsjifdsjfueu88]
+  }
+}
+But maybe, that's too much information, and we don't want the stories that he wrote and his age and name are enough. Populate can then take an other argument containing the field that we need
+
+Story.findOne({ title: Nintendo }).populate('_creator', 'name age')
+result ==>
+
+{
+  _creator : {
+       name: Sai,
+       age: 100,
+    },
+    title    : Nintendo,
+    fans     : [r432i900fds09809n, fdsjifdsjfueu88]
+  }
+}
+Share
