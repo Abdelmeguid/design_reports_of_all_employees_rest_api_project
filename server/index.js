@@ -71,7 +71,6 @@ app.use((req, res, next) => {
 
 app.use("/feed", feedRoutes);
 app.use("/auth", authRoutes);
-const port = process.env.PORT || 8080;
 
 app.use((error, req, res, next) => {
   console.log(error);
@@ -89,7 +88,7 @@ mongoose
     // useUnifiedTopology: true,
   })
   .then((result) => {
-    app.listen(port);
+    app.listen(8080);
   })
   .catch((err) => console.log(err));
 
