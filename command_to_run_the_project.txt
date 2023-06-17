@@ -4,11 +4,44 @@ npm i express
 npm install --save express-validator bcrypt jsonwebtoken mongoose uuid multer
 to automatic update during work
 npm install -g nodemon
-//i think below not urgent ,it only work in development mode
+//i think below (not urgent) ,it only work in development mode
 npm install --save-dev nodemon
+Note : IN pakage.json you must add 
+&IN pakage.json "type": "module",
+
 to run backend
 node ......./.../.app.js or nodemon app.js
+
+NOTE : in index.js in server side add below 
+pp.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+
+if (process.env.NODE_ENV == "production") {
+  app.use(express.static(path.join(__dirname, "/client/build")));
+
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+  );
+}
+
+NOTE: must pakage.json & node.js be out server folder.
+NOTE : import .env
+NOTE: WE have two method to import (imort or require )
+NOTE:copy from pakage.json
+
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
 install react frontend:
+npx create-react-app cleint
 npm install
 npm audit fix --force
 npm start
+Note : IN pakage.json you must add 
+"proxy": "http://localhost:5000",
+&&&&& UNDER "scripts":
+"start": "node server/index",
+    "client": "npm run start --prefix client",
+    "build": "cd client && npm install && npm run build",
+    "server": "node server/index.js",
+    "app": "concurrently npm \"npm run server\" \"npm run client\""
+ NOTE: MUST we make build in front
