@@ -49,10 +49,10 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-app.get("/", (req, res) => {
-  //res.send("Hello, Express!");
-  res.redirect("/");
-});
+// app.get("/", (req, res) => {
+//   //res.send("Hello, Express!");
+//   res.redirect("/");
+// });
 
 // app.use(bodyParser.urlencoded()); // x-www-form-urlencoded <form>
 app.use(bodyParser.json()); // application/json
