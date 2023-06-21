@@ -2,12 +2,14 @@
 // import dotenv from "dotenv";
 // dotenv.config();
 //const dotenv = require("dotenv");
+
 const path = require("path");
 require("dotenv").config({ path: "./.env" });
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const multer = require("multer");
+const cors = require("cors");
 //const { check } = require("express-validator/check");
 //const { body, validationResult } = require("express-validator");
 
@@ -50,8 +52,7 @@ const fileFilter = (req, file, cb) => {
 };
 
 // app.get("/", (req, res) => {
-//   //res.send("Hello, Express!");
-//   res.redirect("/");
+//   res.send("Hello, Express!");
 // });
 
 // app.use(bodyParser.urlencoded()); // x-www-form-urlencoded <form>
@@ -81,30 +82,35 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(
-    "mongodb+srv://ahmed:qwerty666666@cluster0.goxgywv.mongodb.net/?retryWrites=true&w=majority",
-    {
-      useNewUrlParser: true,
-      // useFindAndModify: false,
-      // useCreateIndex: true,
-      // useUnifiedTopology: true,
-    }
-  )
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+  })
+
   .then((result) => {
-    app.listen(8080);
+    app.use(cors());
+    app.use(express.static(path.join(__dirname, "build")));
+
+    app.get("/", (req, res) => {
+      res.sendFile(path.join(__dirname, "build", "index.html"));
+    });
+
+    app.listen(8080, () => {
+      console.log("Server is listening on port 8080");
+    });
   })
   .catch((err) => console.log(err));
 
 //i add below for deployment
 
 //i comment below line as per stalkoverflow
-//const __dirname = path.resolve();
-app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
-if (process.env.NODE_ENV == "production") {
-  app.use(express.static(path.join(__dirname, "/client/build")));
+// const __dirname2 = path.resolve();
+// app.use("/uploads", express.static(path.join(__dirname2, "/uploads")));
 
-  app.get("*", (req, res) =>
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
-  );
-}
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname2, "/client/build")));
+
+//   app.get("*", (req, res) =>
+//     res.sendFile(path.resolve(__dirname2, "client", "build", "index.html"))
+//   );
+// }
