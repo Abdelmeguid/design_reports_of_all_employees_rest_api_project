@@ -8,6 +8,7 @@
 // const mongoose = require("mongoose");
 // const multer = require("multer");
 // const cors = require("cors");
+
 // //const { check } = require("express-validator/check");
 // //const { body, validationResult } = require("express-validator");
 
@@ -92,6 +93,13 @@ const feedRoutes = require("./routes/feed");
 const authRoutes = require("./routes/auth");
 
 const app = express();
+
+//i add below lines
+
+const cors = require("cors");
+app.use(
+  cors({ origin: ["https://client-of-design-reports-of-all.onrender.com"] })
+);
 
 // const fileStorage = multer.diskStorage({
 //   destination: (req, file, cb) => {
